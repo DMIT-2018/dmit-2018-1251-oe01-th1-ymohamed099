@@ -27,7 +27,16 @@ ClubActivities.Where(a => a.StartDate >= new DateTime(2025,1,1) && a.CampusVenue
 .Dump();
 
 // Question 2
-
+Programs.Where(p => p.ProgramCourses.Count(r => r.Required) >= 22)
+.Select(x => new
+{
+	School = x.Schools.SchoolName,
+	Program = x.ProgramName,
+	RequiredCourseCount = x.ProgramCourses.Count(r => r.Required),
+	OptionalCourseCount = x.ProgramCourses.Count - x.ProgramCourses.Count(r => r.Required)
+})
+.OrderBy(x => x.Program)
+.Dump();
 
 // Question 3
 
