@@ -15,7 +15,7 @@
 </Query>
 
 // Question 1
-ClubActivities.Where(a => a.StartDate >= new DateTime(2025,1,1) && a.CampusVenueID != (1) && a.Name != "BTech Club Meeting")
+/*ClubActivities.Where(a => a.StartDate >= new DateTime(2025,1,1) && a.CampusVenueID != (1) && a.Name != "BTech Club Meeting")
 .Select(x => new
 {
 	x.StartDate,
@@ -24,10 +24,10 @@ ClubActivities.Where(a => a.StartDate >= new DateTime(2025,1,1) && a.CampusVenue
 	Activity = x.Name
 })
 .OrderBy(x => x.StartDate)
-.Dump();
+.Dump();*/
 
 // Question 2
-Programs.Where(p => p.ProgramCourses.Count(r => r.Required) >= 22)
+/*Programs.Where(p => p.ProgramCourses.Count(r => r.Required) >= 22)
 .Select(x => new
 {
 	School = x.Schools.SchoolName,
@@ -36,10 +36,10 @@ Programs.Where(p => p.ProgramCourses.Count(r => r.Required) >= 22)
 	OptionalCourseCount = x.ProgramCourses.Count - x.ProgramCourses.Count(r => r.Required)
 })
 .OrderBy(x => x.Program)
-.Dump();
+.Dump();*/
 
 // Question 3
-Students.Where(s => !s.StudentPayments.Any(sn => sn.StudentNumber == s.StudentNumber) && s.Countries.CountryName != "Canada")
+/*Students.Where(s => !s.StudentPayments.Any(sn => sn.StudentNumber == s.StudentNumber) && s.Countries.CountryName != "Canada")
 .OrderBy(x => x.LastName)
 .Select(x => new
 {
@@ -49,9 +49,18 @@ Students.Where(s => !s.StudentPayments.Any(sn => sn.StudentNumber == s.StudentNu
 	ClubMembershipCount = x.ClubMembers.Any(sn => sn.StudentNumber == x.StudentNumber) 
 	? x.ClubMembers.Count(sn => sn.StudentNumber == x.StudentNumber).ToString() : "None"
 })
-.Dump();
+.Dump();*/
 
 // Question 4
-
+Employees.Where(e => e.PositionID == 4 && e.ReleaseDate == null && e.ClassOfferings.Any(co => co.EmployeeID == e.EmployeeID))
+.OrderByDescending(e => e.ClassOfferings.Count())
+.ThenBy(e => e.LastName)
+.Select( x => new
+{
+	ProgramName = x.Program.ProgramName,
+	FullName = x.FirstName + ' ' + x.LastName,
+	WorkLoad = x.ClassOfferings.Count() > 24 ? "High" : x.ClassOfferings.Count() > 8 ? "Med" : "Low"
+})
+.Dump();
 
 // Question 5
